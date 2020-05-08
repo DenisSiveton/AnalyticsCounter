@@ -2,7 +2,6 @@ package com.hemebiotech.analytics;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -12,7 +11,7 @@ import java.util.Set;
  * From a list of symptoms "ArrayList<String>", it will count for each symptom its occurences.
  *
  * It will then write in the "result.out" file the difference occurences for each symptom as follows:
- *    "Symptom : Occurence"
+ *    "Symptom = Occurence"
  */
 public class WriteSymptomDataToResultFile {
 
@@ -21,6 +20,13 @@ public class WriteSymptomDataToResultFile {
 
     //methods
 
+    /**
+     *
+     * @param symptomList a raw list of symptom with possible duplications
+     * @throws IOException
+     *
+     * This constructor is receiving a raw symptom list as a parameter and will conduct the different methods to write the "result.out" file.
+     */
     public WriteSymptomDataToResultFile (ArrayList<String> symptomList) throws IOException {
         this.m_rawSymptomList = symptomList;
         this.WriteSymptomInFile();
@@ -30,10 +36,9 @@ public class WriteSymptomDataToResultFile {
      *
      * It will then return the sorted list so that the symptoms can be counted properly.
      */
-    public ArrayList<String> SortList(ArrayList<String> rawSymptomList){
+    public ArrayList<String> sortList(ArrayList<String> rawSymptomList){
         Collections.sort(rawSymptomList);
-        ArrayList<String> sortedSymptomList =rawSymptomList;
-        return sortedSymptomList;
+        return rawSymptomList;
     }
 
     /**
@@ -63,26 +68,30 @@ public class WriteSymptomDataToResultFile {
      * From a raw list of symptoms, it will write in an output file "result.out" all the symptoms
      * and their occurence sorted alphabetically.
      */
-    public void WriteSymptomInFile() throws IOException {
+    public void WriteSymptomInFile(){
 
         //Create the symptom list sorted
-        ArrayList<String> sortedSymptomList = SortList(m_rawSymptomList);
+        ArrayList<String> sortedSymptomList = sortList(m_rawSymptomList);
 
         //Create the symptom list sorted without duplicates
         ArrayList<String> sortedSymptomListNoDuplications = RemoveDuplicatesFromList(m_rawSymptomList);
 
-        FileWriter writer = new FileWriter ("result.out");
-        writer.write("List of symptom and occurence\n\n");
+        try {
+            FileWriter writer = new FileWriter ("result.out");
+            writer.write("List of symptom and occurence\n\n");
 
-        for(String symptomToAnalyse : sortedSymptomListNoDuplications) {
-            int occurenceSymptom = 0;
-            for (String symptomCount : m_rawSymptomList){
-                if (symptomToAnalyse.equals(symptomCount)) {
-                    occurenceSymptom += 1;
+            for(String symptomToAnalyse : sortedSymptomListNoDuplications) {
+                int occurenceSymptom = 0;
+                for (String symptomCount : m_rawSymptomList){
+                    if (symptomToAnalyse.equals(symptomCount)) {
+                        occurenceSymptom += 1;
+                    }
                 }
-            }
-            writer.write(symptomToAnalyse + " = " + occurenceSymptom +"\n");
+                writer.write(symptomToAnalyse + " = " + occurenceSymptom +"\n");
+            }git
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        writer.close();
     }
 }
