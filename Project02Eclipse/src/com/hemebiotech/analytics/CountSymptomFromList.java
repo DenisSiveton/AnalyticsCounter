@@ -7,12 +7,12 @@ public class CountSymptomFromList implements ISymptomCounter{
 
     //members
 
-    private final WriteSymptomDataToResultFile writer;
+    private final ISymptomWriter writer;
     private final ArrayList<String> sortedSymptomList;
 
     //methods
 
-    public CountSymptomFromList(WriteSymptomDataToResultFile writer, ArrayList<String> symptomList) {
+    public CountSymptomFromList(ISymptomWriter writer, ArrayList<String> symptomList) {
         this.writer = writer;
         Collections.sort(symptomList);
         this.sortedSymptomList = symptomList;

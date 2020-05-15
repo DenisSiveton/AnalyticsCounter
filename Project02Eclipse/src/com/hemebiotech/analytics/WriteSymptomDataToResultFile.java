@@ -14,6 +14,7 @@ public class WriteSymptomDataToResultFile implements ISymptomWriter{
     /**
      * This method just a specific title in the output file.
      */
+    @Override
     public void writeTitle(){
         try {
             FileWriter writer = new FileWriter ("result.out");

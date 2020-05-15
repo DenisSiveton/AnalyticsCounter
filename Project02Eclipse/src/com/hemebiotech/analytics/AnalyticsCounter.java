@@ -12,10 +12,10 @@ public class AnalyticsCounter {
 		String filepath = "symptoms.txt";
 
 		//STEP 1 : Create a class that will read the file and create a list with all the symptoms
-		ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile(filepath);
+		ISymptomReader readSymptom = new ReadSymptomDataFromFile(filepath);
 
 		//STEP 2 : Create a class writer that we will use to write in the output file.
-		WriteSymptomDataToResultFile writer = new WriteSymptomDataToResultFile();
+		ISymptomWriter writer = new WriteSymptomDataToResultFile();
 
 		// STEP 3 : Create a class that will sort the symptom list.
 		CountSymptomFromList countSymptom = new CountSymptomFromList(writer, (ArrayList<String>) readSymptom.getSymptoms());
