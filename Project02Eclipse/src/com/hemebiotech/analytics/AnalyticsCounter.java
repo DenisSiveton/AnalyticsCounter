@@ -1,23 +1,26 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * This class is the main process for extracting and counting the different symptoms and writing the data in the result.out file
+ */
 public class AnalyticsCounter {
-	
-	public static void main(String args[]) throws Exception {
-		// first get input via the filepath
-		String filepath = "symptoms.txt";
 
-		//Create a class that will read the file and create a list
-
-		ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile(filepath);
-
-		//Create a class that will sort the symptom list and write all the occurence in the output file.
-
-		WriteSymptomDataToResultFile writeSymptom = new WriteSymptomDataToResultFile((ArrayList<String>) readSymptom.GetSymptoms());
+	public List<String> read(String inputFilePath) {
+		return new ReadSymptomDataFromFile(inputFilePath).getSymptoms();
 	}
+
+	public Map<String, Integer> count(List<String> symptomsList) {
+		ISymptomCounter countSymptom = new CountSymptomFromList(symptomsList);
+		return countSymptom.countSymptoms();
+	}
+
+	public void write(String outputFilePath, Map<String, Integer> mapSymptoms) {
+		ISymptomWriter writer = new WriteSymptomDataToResultFile();
+		writer.writeSymptoms(outputFilePath, mapSymptoms);
+	}
+
 
 }
