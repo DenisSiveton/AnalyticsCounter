@@ -27,7 +27,7 @@ public class CountSymptomFromList implements ISymptomCounter{
         int occurrenceSymptom = 0;
         String currentSymptom = sortedSymptomList.get(0);
 
-        Map<String, Integer> mapSymptomOccurrence = new HashMap<>();
+        Map<String, Integer> mapSymptomOccurrence = new TreeMap<>();
         for(String symptomToAnalyse : sortedSymptomList) {
             if (currentSymptom.equals(symptomToAnalyse)) {
                 occurrenceSymptom += 1;
@@ -38,6 +38,6 @@ public class CountSymptomFromList implements ISymptomCounter{
                 occurrenceSymptom = 1;
             }
         }
-        return new TreeMap<>(mapSymptomOccurrence);
+        return mapSymptomOccurrence;
     }
 }
