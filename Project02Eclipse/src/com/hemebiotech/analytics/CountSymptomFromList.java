@@ -2,41 +2,42 @@ package com.hemebiotech.analytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 public class CountSymptomFromList implements ISymptomCounter{
 
-    //members
-
-    private final ISymptomWriter writer;
     private final ArrayList<String> sortedSymptomList;
 
-    //methods
 
-    public CountSymptomFromList(ISymptomWriter writer, ArrayList<String> symptomList) {
-        this.writer = writer;
+    public CountSymptomFromList(ArrayList<String> symptomList) {
         Collections.sort(symptomList);
         this.sortedSymptomList = symptomList;
     }
 
     /**
      * This method will count for each symptom the amount of time it occurred.
-     * I will also write in the output file the data using the "WriteSymptomDataToFile" class
+     * I will also return a Map <String, Integer> equivalent to <Symptom, Occurence>
+     *
      */
     @Override
-    public void countSymptoms() {
+    public Map<String, Integer> countSymptoms() {
 
         int occurrenceSymptom = 0;
         String currentSymptom = sortedSymptomList.get(0);
-        writer.writeTitle();
+
+        Map<String, Integer> mapSymptomOccurrence = new HashMap<>();
         for(String symptomToAnalyse : sortedSymptomList) {
             if (currentSymptom.equals(symptomToAnalyse)) {
                 occurrenceSymptom += 1;
             }
             else {
-                writer.writeSymptoms(symptomToAnalyse, occurrenceSymptom);
+                mapSymptomOccurrence.put(currentSymptom, occurrenceSymptom);
                 currentSymptom = symptomToAnalyse;
                 occurrenceSymptom = 1;
             }
         }
+        return new TreeMap<>(mapSymptomOccurrence);
     }
 }

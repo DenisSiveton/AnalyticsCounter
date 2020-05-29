@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class implemented from ISymptomReader, retreives the data from a specific file and stores them in a list.
+ * This class implemented from ISymptomReader, retrieves the data from a specific text file and stores them in a list.
  *
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
@@ -27,18 +27,30 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		ArrayList<String> result = new ArrayList<>();
 		
 		if (filepath != null) {
+			BufferedReader reader = null;
 			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				reader = new BufferedReader (new FileReader(filepath));
 				String line = reader.readLine();
 				
 				while (line != null) {
 					result.add(line);
 					line = reader.readLine();
 				}
-				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			finally{
+				if (reader !=null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		else{
+			System.out.println("Input file does not exist, please try another file.\n");
 		}
 		
 		return result;

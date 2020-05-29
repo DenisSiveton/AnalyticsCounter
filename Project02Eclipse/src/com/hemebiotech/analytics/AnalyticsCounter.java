@@ -1,6 +1,7 @@
 package com.hemebiotech.analytics;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * This class is the main process for extracting and counting the different symptoms and writing the data in the result.out file
@@ -8,19 +9,16 @@ import java.util.ArrayList;
 public class AnalyticsCounter {
 
 	public static void main(String[] args) {
-		// first get input via the filepath
-		String filepath = "symptoms.txt";
+		//determine the input and output files path
+		String inputFilePath = "symptoms.txt";
+		String outputFilePath = "result.out";
 
-		//STEP 1 : Create a class that will read the file and create a list with all the symptoms
-		ISymptomReader readSymptom = new ReadSymptomDataFromFile(filepath);
-
-		//STEP 2 : Create a class writer that we will use to write in the output file.
+		ISymptomReader readSymptom = new ReadSymptomDataFromFile(inputFilePath);
 		ISymptomWriter writer = new WriteSymptomDataToResultFile();
+		ISymptomCounter countSymptom = new CountSymptomFromList((ArrayList<String>) readSymptom.getSymptoms());
 
-		// STEP 3 : Create a class that will sort the symptom list.
-		CountSymptomFromList countSymptom = new CountSymptomFromList(writer, (ArrayList<String>) readSymptom.getSymptoms());
 
-		//STEP 4 : Count and write all the symptom in the output file.
-		countSymptom.countSymptoms();
+		Map<String, Integer> mapSymptom = countSymptom.countSymptoms();
+		writer.writeSymptoms(outputFilePath, mapSymptom);
 	}
 }

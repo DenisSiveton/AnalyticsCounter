@@ -2,6 +2,7 @@ package com.hemebiotech.analytics;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This class is used to write in a file the amount of times a symptom occurred as follows :
@@ -9,40 +10,35 @@ import java.io.IOException;
  */
 public class WriteSymptomDataToResultFile implements ISymptomWriter{
 
-    //methods
-
-    /**
-     * This method just a specific title in the output file.
-     */
-    @Override
-    public void writeTitle(){
-        try {
-            FileWriter writer = new FileWriter ("result.out");
-            writer.write("List of symptom and occurence\n\n");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      *
-     * @param symptom symptom that will be added to the output file
-     * @param occurrence times the symptom occurred
+     * @param filepath symptom that will be added to the output file
+     * @param mapSymptomOccurrence times the symptom occurred
      *
      * This method will write in the output file the following line:
      *    " symptom = occurrence "
      */
     @Override
-    public void writeSymptoms(String symptom, int occurrence) {
-
+    public void writeSymptoms(String filepath, Map<String, Integer> mapSymptomOccurrence) {
+        FileWriter writer = null;
         try {
-            FileWriter writer = new FileWriter ("result.out");
-            writer.write(symptom + " = " + occurrence +"\n");
-            writer.close();
-
-        } catch (IOException e) {
+            writer = new FileWriter(filepath);
+            writer.write("List of symptom and occurence\n\n");
+            for (Map.Entry<String, Integer> symptom : mapSymptomOccurrence.entrySet()) {
+                writer.write(symptom.getKey() + " = " + symptom.getValue() + "\n");
+            }
+        }
+        catch (IOException e) {
             e.printStackTrace();
+        }
+        finally{
+            if (writer !=null) {
+                try {
+                writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
