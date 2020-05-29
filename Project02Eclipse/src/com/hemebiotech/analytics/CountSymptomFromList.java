@@ -1,17 +1,16 @@
 package com.hemebiotech.analytics;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class CountSymptomFromList implements ISymptomCounter{
 
-    private final ArrayList<String> sortedSymptomList;
+    private final List<String> sortedSymptomList;
 
 
-    public CountSymptomFromList(ArrayList<String> symptomList) {
+    public CountSymptomFromList(List<String> symptomList) {
         Collections.sort(symptomList);
         this.sortedSymptomList = symptomList;
     }

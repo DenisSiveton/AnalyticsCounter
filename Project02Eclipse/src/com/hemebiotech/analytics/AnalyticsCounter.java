@@ -1,6 +1,6 @@
 package com.hemebiotech.analytics;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,17 +8,19 @@ import java.util.Map;
  */
 public class AnalyticsCounter {
 
-	public static void main(String[] args) {
-		//determine the input and output files path
-		String inputFilePath = "symptoms.txt";
-		String outputFilePath = "result.out";
-
-		ISymptomReader readSymptom = new ReadSymptomDataFromFile(inputFilePath);
-		ISymptomWriter writer = new WriteSymptomDataToResultFile();
-		ISymptomCounter countSymptom = new CountSymptomFromList((ArrayList<String>) readSymptom.getSymptoms());
-
-
-		Map<String, Integer> mapSymptom = countSymptom.countSymptoms();
-		writer.writeSymptoms(outputFilePath, mapSymptom);
+	public List<String> read(String inputFilePath) {
+		return new ReadSymptomDataFromFile(inputFilePath).getSymptoms();
 	}
+
+	public Map<String, Integer> count(List<String> symptomsList) {
+		ISymptomCounter countSymptom = new CountSymptomFromList(symptomsList);
+		return countSymptom.countSymptoms();
+	}
+
+	public void write(String outputFilePath, Map<String, Integer> mapSymptoms) {
+		ISymptomWriter writer = new WriteSymptomDataToResultFile();
+		writer.writeSymptoms(outputFilePath, mapSymptoms);
+	}
+
+
 }
