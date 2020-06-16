@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is the main process for extracting and counting the different symptoms and writing the data in the result.out file
+ * This class define the different methods needed for each step of the process.
+ * 		1 - Read
+ * 		2 - Count
+ * 		3 - Write
  */
 public class AnalyticsCounter {
 
 	public List<String> read(String inputFilePath) {
-		return new ReadSymptomDataFromFile(inputFilePath).getSymptoms();
+		ISymptomReader readSymptom = new ReadSymptomDataFromFile(inputFilePath);
+		return readSymptom.getSymptoms();
 	}
 
 	public Map<String, Integer> count(List<String> symptomsList) {
