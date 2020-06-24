@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * This class is used to write in a file the amount of times a symptom occurred as follows :
+ * This class, implemented from ISymptomWriter,  is used to write in a file the amount of times a symptom occurred as follows :
  *    "Symptom = Occurence"
  */
 public class WriteSymptomDataToResultFile implements ISymptomWriter{

@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * This class, implemented from ISymptomWCounter,  is used to count the amount of times a symptom occurred and place the following data
+ * in a TreeMap<String, Integer> as follows:
+ *    key --> Symptom
+ *    value --> Occurrence
+ */
 public class CountSymptomFromList implements ISymptomCounter{
 
     private final List<String> sortedSymptomList;
